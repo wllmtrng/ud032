@@ -9,7 +9,7 @@ you have to install MongoDB, download and insert the dataset.
 For instructions related to MongoDB setup and datasets please see Course Materials.
 """
 from datetime import datetime
-    
+
 def get_db():
     from pymongo import MongoClient
     client = MongoClient('localhost:27017')
@@ -19,7 +19,7 @@ def get_db():
 
 def range_query():
     # You can use datetime(year, month, day) to specify date in the query
-    query = {}
+    query = {"foundingDate": {"$gt": datetime(2000, 12, 31)}}
     return query
 
 

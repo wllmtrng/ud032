@@ -18,8 +18,9 @@ def get_db():
 
 def in_query():
     # Write the query
-    query = {}
-    
+    query = {"manufacturer": "Ford Motor Company",
+             "assembly": {"$in": ["Germany", "United Kingdom", "Japan"]}}
+
     return query
 
 
@@ -33,3 +34,55 @@ if __name__ == "__main__":
     import pprint
     for a in autos:
         pprint.pprint(a)
+
+"""
+Found autos: 17
+Printing first 3 results
+
+{u'assembly': [u'Argentina',
+               u'Australia',
+               u'Berlin',
+               u'Brazil',
+               u'Buenos Aires',
+               u'Canada',
+               u'Copenhagen',
+               u'Cork',
+               u'Denmark',
+               u'Detroit',
+               u'Dothan Alabama',
+               u'England',
+               u'Geelong',
+               u'Germany',
+               u'Highland Park Michigan',
+               u'Ireland',
+               u'Manchester',
+               u'Minneapolis',
+               u'Ontario',
+               u'S\xe3o Bernardo do Campo',
+               u'Saint Paul Minnesota',
+               u'Toronto',
+               u'Walkerville Ontario'],
+ u'manufacturer': u'Ford Motor Company',
+ u'name': u'Ford Model T'}
+{u'assembly': [u'Chongqing',
+               u'Germany',
+               u'Michigan Assembly Plant',
+               u'Rayong',
+               u'Russia',
+               u'Saarlouis Body & Assembly',
+               u'Thailand',
+               u'United States',
+               u'Vsevolozhsk'],
+ u'manufacturer': u'Ford Motor Company',
+ u'name': u'Ford Focus'}
+{u'assembly': [u'Australia',
+               u'Hiroshima',
+               u'Homebush New South Wales',
+               u'Japan',
+               u'New Zealand',
+               u'Pretoria',
+               u'South Africa',
+               u'Taiwan'],
+ u'manufacturer': u'Ford Motor Company',
+ u'name': u'Ford Telstar'}
+ """

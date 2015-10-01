@@ -9,15 +9,24 @@
 # so the returned list should have 10 entries!
 import os
 
-DATADIR = ""
+DATADIR = "./"
 DATAFILE = "beatles-diskography.csv"
 
 
 def parse_file(datafile):
     data = []
     with open(datafile, "rb") as f:
+        headers = f.readline().rstrip().split(",")
+        count = 0
         for line in f:
-            print line
+            if count == 10:
+                break
+            values = line.rstrip().split(",")
+            row = {}
+            for index, key in enumerate(headers):
+                row[key] = values[index]
+            data.append(row)
+            count += 1
 
     return data
 
@@ -32,5 +41,5 @@ def test():
     assert d[0] == firstline
     assert d[9] == tenthline
 
-    
+
 test()

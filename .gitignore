@@ -37,3 +37,4 @@ nosetests.xml
 
 # OSX stuff
 .DS_Store
+2013_ERCOT_Hourly_Load_Data.xls
