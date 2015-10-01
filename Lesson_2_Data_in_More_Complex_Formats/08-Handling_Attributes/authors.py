@@ -25,11 +25,18 @@ def get_authors(root):
                 "insr": []
         }
 
-        # YOUR CODE HERE
+        valid_key_values = set(["fnm", "snm", "email"])
+
+        for elem in author.iter():
+            if elem.tag in valid_key_values:
+                data[elem.tag] = elem.text
+            elif elem.tag == "insr":
+                data["insr"].append(elem.attrib["iid"])
 
         authors.append(data)
 
     return authors
+
 
 
 def test():
