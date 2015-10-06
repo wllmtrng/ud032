@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-In this problem set you work with another type of infobox data, audit it, clean it, 
+In this problem set you work with another type of infobox data, audit it, clean it,
 come up with a data model, insert it into a MongoDB and then run some queries against your database.
 The set contains data about Arachnid class.
 
@@ -41,6 +41,7 @@ import codecs
 import csv
 import json
 import pprint
+import re
 
 DATAFILE = 'arachnid.csv'
 FIELDS ={'rdf-schema#label': 'label',
@@ -55,14 +56,20 @@ def add_field(filename, fields):
         reader = csv.DictReader(f)
         for i in range(3):
             l = reader.next()
-        # YOUR CODE HERE
+
+        for line in reader:
+            bi_auth = line['binomialAuthority_label'].strip()
+            if bi_auth == "NULL":
+                continue
+            data[re.sub(" ?\([^)]*\)","",line['rdf-schema#label'])] = bi_auth
 
     return data
 
 
 def update_db(data, db):
-    # YOUR CODE HERE
-    pass
+    for k,v in data.iteritems():
+        db.arachnid.update({FIELDS['rdf-schema#label']: k},
+                           {"$set": {"classification" : {FIELDS['binomialAuthority_label']:v}}})
 
 
 def test():
@@ -70,7 +77,8 @@ def test():
     # Changes done to this function will not be taken into account
     # when doing a Test Run or Submit, they are just for your own reference
     # and as an example for running this code locally!
-    
+    import os
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     data = add_field(DATAFILE, FIELDS)
     from pymongo import MongoClient
     client = MongoClient("mongodb://localhost:27017")
